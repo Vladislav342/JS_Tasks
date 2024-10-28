@@ -1,0 +1,121 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+    <style>
+        #app {
+            display: flex;
+            flex-direction: row;
+            flex-wrap: wrap;
+            justify-content: center;
+            border: 1px solid black;
+        }
+
+        .blockUnchecked {
+            height: 100px;
+            margin-left: 5px;
+            width: 100px;
+            border: 1px solid black;
+            background: yellow;
+            margin-top: 5px;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .blockChecked {
+            height: 100px;
+            margin-left: 5px;
+            width: 100px;
+            border: 1px solid black;
+            background: pink;
+            margin-top: 5px;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .blockUnchecked:before {
+            content: '';
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        .blockChecked:before {
+            content: '';
+            display: inline-block;
+            height: 100%;
+            vertical-align: middle;
+            text-align: center;
+        }
+
+        #app div p {
+            display: inline-block;
+        }
+    </style>
+</head>
+<body>
+    <div id="app"></div>
+    
+    <script>
+        let divs = [];
+        let mainBlock = document.getElementById("app");
+
+        function Block(num) {
+            this.id = +num + 1;
+            this.name = 'div ' + (num + 1);
+            this.clicked = false;
+        }
+
+        for (let i = 0; i <= 99; i++) {
+            divs.push(new Block(i));
+        }
+
+        divs.map(d => {
+            let p = document.createElement('p');
+            p.innerHTML = d.name;
+
+            let div = document.createElement('div');
+            div.id = d.id;
+            div.classList.add('blockUnchecked');
+            div.append(p);
+            mainBlock.append(div);
+
+            div.addEventListener('click', event => placeBlock(+event.currentTarget.id));
+        })
+
+        function placeBlock(iD) {
+            let index = divs.findIndex(item => item.id === iD);
+            let currentObj = divs[index];
+
+            if (!currentObj.clicked) {
+                currentObj.clicked = true;
+                divs.splice(index, 1);
+                divs.unshift(currentObj);
+
+                let currentBlock = document.getElementById(`${iD}`);
+                currentBlock.classList.toggle('blockChecked');
+                mainBlock.prepend(currentBlock);
+            } else {
+                currentObj.clicked = false;
+                let neededBlock = divs[iD - 1];
+                let neededPos = divs.findIndex(item => item.id === neededBlock.id);
+                divs.splice(index, 1);
+                divs.splice(neededPos, 0, currentObj);
+
+                let currentBlock = document.getElementById(`${iD}`);
+                currentBlock.classList.replace('blockChecked', 'blockUnchecked');
+
+                let redundantBlock = iD === 1 ? neededBlock : divs[iD - 2];
+                let neededPlace = document.getElementById(`${redundantBlock.id}`);
+
+                iD === 1 ? neededPlace.before(currentBlock) : neededPlace.after(currentBlock);
+            }
+        }
+    </script>
+
+</body>
+</html>
+
