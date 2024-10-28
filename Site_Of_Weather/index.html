@@ -1,0 +1,42 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <meta http-equiv="X-UA-Compatible" content="ie=edge">
+    <title>Weather</title>
+    <link rel="stylesheet" href="./css/main.css" />
+    <script src="https://unpkg.com/axios/dist/axios.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+<body>
+    <header class="header">
+        <h1 class="title">Forecast</h1>
+        <form class="form">
+            <div class="block" id="search">
+                <input id="NameOfCity" class="input" type="text" value="" placeholder="Search city" />
+                <button class="btn" onclick="createBlock(NameOfCity.value, count)" type=button>Click</button>
+            </div>
+            <button class="btn2" onclick="upCount()" type=button alt="Add New Addition">+</button>
+        </form>
+    </header>
+
+    <div id="popup-small" class="popup-wrapper">
+        <a href="#top" class="popup-close-bg"></a>
+        <div class="popup-content">
+            <a class="popup-close" href="#top">&times;</a>
+            <h1 class="popup-header">Info Modal</h1>
+            <div class="popup-text" id="message">
+            </div>
+        </div>
+    </div>
+
+
+    <div id="mainBlock" class="cards">
+    </div>
+
+
+    <script src="main.js"></script>
+    <script src="cities.js"></script>
+</body>
+</html>
