@@ -90,7 +90,7 @@ function createBlock(city, count = 0) {
 
 var timeFormat = (function () {
     return function (ms) {
-        let months = ['Jan, Feb', 'Maê', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
+        let months = ['Jan, Feb', 'MaÃª', 'Apr', 'May', 'Jun', 'Jul', 'Aug', 'Sep', 'Oct', 'Nov', 'Dec'];
 
         let a = new Date(ms * 1000);
         let hour = a.getHours();
@@ -290,7 +290,9 @@ var timeFormat = (function () {
 
                 chart1.append(canva1);
                 block.append(mainDiv1, chart1);
-                mainBlock.append(block);
+                if (!id) {
+                    mainBlock.append(block);
+                }
             } catch(err) {
                 confirm(modalLabels.error);
             }
